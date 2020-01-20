@@ -6,11 +6,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * BaseEntity
@@ -19,12 +23,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class BaseEntity {
 
     // == fields ==
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "serial")
+    @Column(columnDefinition = "bigserial")
+    @JsonProperty(access = Access.READ_ONLY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(length = 100)
@@ -35,5 +43,6 @@ public class BaseEntity {
     private Timestamp createdDate;
 
     @UpdateTimestamp
+    @JsonProperty(access = Access.READ_ONLY)
     private Timestamp lastModifiedDate;
 }

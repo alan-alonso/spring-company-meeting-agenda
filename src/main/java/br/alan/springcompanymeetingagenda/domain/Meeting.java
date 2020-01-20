@@ -8,12 +8,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Meeting
@@ -23,14 +26,20 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@ToString(callSuper = true, exclude = "resources")
 public class Meeting extends BaseEntity {
 
     // == fields ==
     @Column(length = 500)
     private String description;
 
+    @NotNull
+    @Column(name = "start_date", nullable = false)
     private Timestamp start;
 
+    @NotNull
+    @Column(name = "end_date", nullable = false)
     private Timestamp end;
 
     @OneToMany
