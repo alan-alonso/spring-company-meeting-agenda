@@ -1,14 +1,7 @@
 package br.alan.springcompanymeetingagenda.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,42 +17,51 @@ import br.alan.springcompanymeetingagenda.repositories.ResourceTypeRepository;
  * ResourceTypeServiceTest
  */
 @ExtendWith(MockitoExtension.class)
-public class ResourceTypeServiceTest {
+public class ResourceTypeServiceTest extends CRUDServiceTest<ResourceType> {
 
     @Mock
     ResourceTypeRepository resourceTypeRepository;
 
     @InjectMocks
-    ResourceTypeServiceImpl resourceTypeService;
+    ResourceTypeService resourceTypeService;
 
     ResourceType resourceType;
 
     @BeforeEach
     void setUp() {
+        super.setRepository(this.resourceTypeRepository);
+        super.setService(this.resourceTypeService);
         this.resourceType = ResourceType.builder().id(1L).name("name")
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now())).build();
     }
-    
-    // TODO: Get one resourceType (correct and throw)
 
-    // TODO: Get all (paged) resourceTypes
 
-    @DisplayName("Create ResourceType Test should call repository and return created entity")
+    @DisplayName("getById should call repository and return stored ResourceType")
     @Test
-    void createResourceTypeTest() {
-        // arrange
-        when(this.resourceTypeRepository.save(any(ResourceType.class))).thenReturn(resourceType);
-
-        // act
-        ResourceType resourceType = this.resourceTypeService.createResourceType(this.resourceType);
-
-        // assert
-        verify(this.resourceTypeRepository).save(this.resourceType);
-        assertEquals(this.resourceType, resourceType);
+    void getResourceTypeByIdTest() throws NotFoundException {
+        super.getByIdTest(this.resourceType);
     }
 
-    @DisplayName("updateResourceType should return correct modified resource type")
+    @DisplayName("getById should call repository and return stored ResourceType")
+    @Test
+    void getResourceTypeByIdShouldThrow() throws NotFoundException {
+        super.getByIdShouldThrow();
+    }
+
+    @DisplayName("listAll should return correct paged data")
+    @Test
+    void getResourcesTest() {
+        super.listAllTest();
+    }
+
+    @DisplayName("create should return new stored ResourceType")
+    @Test
+    void createResourceTypeTest() {
+        super.createTest(this.resourceType);
+    }
+
+    @DisplayName("update should return correct modified resource type")
     @Test
     void updateResourceTypeTest() throws NotFoundException {
         // arrange
@@ -70,54 +72,25 @@ public class ResourceTypeServiceTest {
                 .createdDate(this.resourceType.getCreatedDate())
                 .lastModifiedDate(this.resourceType.getLastModifiedDate()).build();
 
-        when(this.resourceTypeRepository.findById(resourceType.getId()))
-                .thenReturn(Optional.of(resourceType));
-        when(this.resourceTypeRepository.save(any(ResourceType.class)))
-                .thenReturn(expectedMergedResourceType);
-
-        // act
-        ResourceType actualMergedResourceType = this.resourceTypeService
-                .updateResourceType(this.resourceType.getId(), modifiedResourceType);
-
-        // assert
-        verify(this.resourceTypeRepository).findById(this.resourceType.getId());
-        verify(this.resourceTypeRepository).save(expectedMergedResourceType);
-        assertEquals(expectedMergedResourceType, actualMergedResourceType);
+        super.updateTest(modifiedResourceType, this.resourceType, expectedMergedResourceType);
     }
 
-    @DisplayName("updateResourceType should throw NotFoundException")
+    @DisplayName("update should throw NotFoundException")
     @Test
-    void updateResourceTypeTestShouldThrow() {
-        // arrange
-        when(this.resourceTypeRepository.findById(anyLong())).thenReturn(Optional.ofNullable(null));
-
-        // act / assert
-        assertThrows(NotFoundException.class, () -> this.resourceTypeService
-                .updateResourceType(this.resourceType.getId(), this.resourceType));
+    void updateResourceTypeShouldThrow() throws NotFoundException {
+        super.updateShouldThrow(this.resourceType);
     }
 
-    @DisplayName("deleteResourceType should call repository delete method")
+    @DisplayName("delete should call repository delete method")
     @Test
     void deleteResourceTypeTest() throws NotFoundException {
-        // assert
-        when(this.resourceTypeRepository.findById(this.resourceType.getId()))
-                .thenReturn(Optional.ofNullable(this.resourceType));
-
-        // act
-        this.resourceTypeService.deleteResourceType(this.resourceType.getId());
-
-        // assert
-        verify(this.resourceTypeRepository).delete(any(ResourceType.class));
+        super.deleteTest(this.resourceType);
     }
 
-    @DisplayName("deleteResourceType should throw NotFoundException")
+    @DisplayName("delete should throw NotFoundException")
     @Test
     void deleteResourceTypeShouldThrow() throws NotFoundException {
-        // arrange
-        when(this.resourceTypeRepository.findById(anyLong())).thenReturn(Optional.ofNullable(null));
-
-        // act / assert
-        assertThrows(NotFoundException.class,
-                () -> this.resourceTypeService.deleteResourceType(this.resourceType.getId()));
+        super.deleteShouldThrow();
     }
+
 }
