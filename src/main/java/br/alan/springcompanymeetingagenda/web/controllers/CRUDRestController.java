@@ -1,23 +1,24 @@
-package br.alan.springcompanymeetingagenda.services;
+package br.alan.springcompanymeetingagenda.web.controllers;
 
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 
 /**
- * CRUDService
- * 
- * Generic interface with methods for CRUD operations in a entity.
+ * CRUDRestController
+ *
+ *
  */
-public interface CRUDService<E> {
+public interface CRUDRestController<E> {
 
     /**
      * Get paged list of all stored objects.
      * 
-     * @param pageable pageable request
+     * @param pageNumber number of the page for pageable object
+     * @param pageSize   size of the page for pageable object
      * @return paged stored objects
      */
-    Page<E> listAll(Pageable pageable);
+    ResponseEntity<Page<E>> listAll(Integer pageNumber, Integer pageSize);
 
     /**
      * Get stored object by its ID.
@@ -26,25 +27,25 @@ public interface CRUDService<E> {
      * @return stored object
      * @throws NotFoundException if object with input ID couldn't be found
      */
-    E getById(Long id) throws NotFoundException;
+    ResponseEntity<E> getById(Long id) throws NotFoundException;
 
     /**
      * Create new object.
      * 
      * @param object to be stored
-     * @return created object
+     * @return path to created object
+     * @throws NotFoundException if object with input ID couldn't be found
      */
-    E create(E object);
+    ResponseEntity<Object> create(E object);
 
     /**
      * Modify possibly existing object with the input ID.
      * 
      * @param id     existing object ID
      * @param object modified object
-     * @return modified stored object
-     * @throws NotFoundException if object with input ID couldn't be found
+     * @throws NotFoundException
      */
-    E update(Long id, E object) throws NotFoundException;
+    void update(Long id, E object) throws NotFoundException;
 
     /**
      * Delete possibly existing object with the input ID.

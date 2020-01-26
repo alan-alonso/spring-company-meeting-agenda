@@ -22,25 +22,25 @@ import lombok.Setter;
  */
 @Setter
 @SuppressWarnings({"unchecked"})
-public abstract class CRUDServiceTest<T> {
+public abstract class CRUDServiceTest<E> {
 
     // == fields ==
     // repository mock
-    private PagingAndSortingRepository<T, Long> repository;
+    private PagingAndSortingRepository<E, Long> repository;
     // service to be tested
-    private CRUDService<T> service;
+    private CRUDService<E> service;
 
     /**
      * {@link CRUDService#listAll()} test method.
      */
     protected void listAllTest() {
         // arrange
-        Page<T> pagedObj = Mockito.mock(Page.class);
+        Page<E> pagedObj = Mockito.mock(Page.class);
 
         when(this.repository.findAll(any(Pageable.class))).thenReturn(pagedObj);
 
         // act
-        Page<T> storedObject = this.service.listAll(PageRequest.of(0, 1));
+        Page<E> storedObject = this.service.listAll(PageRequest.of(0, 1));
 
         // assert
         verify(this.repository).findAll(any(Pageable.class));
@@ -53,12 +53,12 @@ public abstract class CRUDServiceTest<T> {
      * @param returnObject expected return object
      * @throws NotFoundException if object with input ID couldn't be found
      */
-    protected void getByIdTest(T returnObject) throws NotFoundException {
+    protected void getByIdTest(E returnObject) throws NotFoundException {
         // arrange
         when(this.repository.findById(anyLong())).thenReturn(Optional.of(returnObject));
 
         // act
-        T storedObject = this.service.getById(1L);
+        E storedObject = this.service.getById(1L);
 
         // assert
         verify(this.repository).findById(anyLong());
@@ -84,12 +84,12 @@ public abstract class CRUDServiceTest<T> {
      * 
      * @param returnObject
      */
-    protected void createTest(T returnObject) {
+    protected void createTest(E returnObject) {
         // arrange
         when(this.repository.save(any())).thenReturn(returnObject);
 
         // act
-        T storedObj = this.service.create(returnObject);
+        E storedObj = this.service.create(returnObject);
 
         // assert
         verify(this.repository).save(returnObject);
@@ -104,14 +104,14 @@ public abstract class CRUDServiceTest<T> {
      * @param returnObject   expected return object
      * @throws NotFoundException if object with input ID couldn't be found
      */
-    protected void updateTest(T modifiedObject, T storedObject, T returnObject)
+    protected void updateTest(E modifiedObject, E storedObject, E returnObject)
             throws NotFoundException {
         // arrange
         when(this.repository.findById(anyLong())).thenReturn(Optional.of(storedObject));
         when(this.repository.save(any())).thenReturn(returnObject);
 
         // act
-        T resultObject = this.service.update(1L, modifiedObject);
+        E resultObject = this.service.update(1L, modifiedObject);
 
         // assert
         verify(this.repository).findById(anyLong());
@@ -126,7 +126,7 @@ public abstract class CRUDServiceTest<T> {
      * @param modifiedObject object with modified properties
      * @throws NotFoundException if object with input ID couldn't be found
      */
-    protected void updateShouldThrow(T modifiedObject) throws NotFoundException {
+    protected void updateShouldThrow(E modifiedObject) throws NotFoundException {
         // arrange
         when(this.repository.findById(anyLong())).thenReturn(Optional.ofNullable(null));
 
@@ -140,9 +140,10 @@ public abstract class CRUDServiceTest<T> {
      * @param returnObject expected return object
      * @throws NotFoundException if object with input ID couldn't be found
      */
-    protected void deleteTest(T returnObject) throws NotFoundException {
+    protected void deleteTest(E returnObject) throws NotFoundException {
         // arrange
         when(this.repository.findById(anyLong())).thenReturn(Optional.of(returnObject));
+        Mockito.doNothing().when(this.repository).delete(any());
 
         // act
         this.service.delete(1L);

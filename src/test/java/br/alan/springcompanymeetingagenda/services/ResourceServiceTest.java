@@ -48,7 +48,7 @@ public class ResourceServiceTest extends CRUDServiceTest<Resource> {
         super.getByIdTest(this.resource);
     }
 
-    @DisplayName("getById should call repository and return stored Resource")
+    @DisplayName("getById should throw NotFoundException")
     @Test
     void getResourceByIdShouldThrow() throws NotFoundException {
         super.getByIdShouldThrow();
@@ -69,15 +69,14 @@ public class ResourceServiceTest extends CRUDServiceTest<Resource> {
     @DisplayName("update should return correct modified Resource")
     @Test
     void updateResourceTest() throws NotFoundException {
-    // arrange
-    Resource modifiedResource = Resource.builder().name("modified").build();
+        // arrange
+        Resource modifiedResource = Resource.builder().name("modified").build();
 
-    Resource expectedMergedResource = Resource.builder()
-    .id(this.resource.getId()).name(modifiedResource.getName())
-    .createdDate(this.resource.getCreatedDate())
-    .lastModifiedDate(this.resource.getLastModifiedDate()).build();
+        Resource expectedMergedResource = Resource.builder().id(this.resource.getId())
+                .name(modifiedResource.getName()).createdDate(this.resource.getCreatedDate())
+                .lastModifiedDate(this.resource.getLastModifiedDate()).build();
 
-    super.updateTest(modifiedResource, this.resource, expectedMergedResource);
+        super.updateTest(modifiedResource, this.resource, expectedMergedResource);
     }
 
     @DisplayName("update should throw NotFoundException")

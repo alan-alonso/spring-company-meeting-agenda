@@ -47,31 +47,31 @@ public class MeetingServiceTest extends CRUDServiceTest<Meeting> {
 
     @DisplayName("getById should call repository and return stored Meeting")
     @Test
-    void getResourceTypeByIdTest() throws NotFoundException {
+    void getMeetingByIdTest() throws NotFoundException {
         super.getByIdTest(this.meeting);
     }
 
-    @DisplayName("getById should call repository and return stored Meeting")
+    @DisplayName("getById should throw NotFoundException")
     @Test
-    void getResourceByIdShouldThrow() throws NotFoundException {
+    void getMeetingByIdShouldThrow() throws NotFoundException {
         super.getByIdShouldThrow();
     }
 
     @DisplayName("listAll should return correct paged data")
     @Test
-    void getResourcesTest() {
+    void getMeetingsTest() {
         super.listAllTest();
     }
 
     @DisplayName("create should return new stored Meeting")
     @Test
-    void createResourceTest() {
+    void createMeetingTest() {
         super.createTest(this.meeting);
     }
 
     @DisplayName("update should return correct modified Meeting")
     @Test
-    void updateResourceTest() throws NotFoundException {
+    void updateMeetingTest() throws NotFoundException {
         // arrange
         Meeting modifiedMeeting = Meeting.builder().name("modified").build();
 
@@ -84,19 +84,19 @@ public class MeetingServiceTest extends CRUDServiceTest<Meeting> {
 
     @DisplayName("update should throw NotFoundException")
     @Test
-    void updateResourceShouldThrow() throws NotFoundException {
+    void updateMeetingShouldThrow() throws NotFoundException {
         super.updateShouldThrow(this.meeting);
     }
 
     @DisplayName("delete should call repository delete method")
     @Test
-    void deleteResourceTest() throws NotFoundException {
+    void deleteMeetingTest() throws NotFoundException {
         super.deleteTest(this.meeting);
     }
 
     @DisplayName("delete should throw NotFoundException")
     @Test
-    void deleteResourceShouldThrow() throws NotFoundException {
+    void deleteMeetingShouldThrow() throws NotFoundException {
         super.deleteShouldThrow();
     }
 }

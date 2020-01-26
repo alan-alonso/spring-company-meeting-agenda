@@ -38,8 +38,9 @@ public class BaseEntity {
     @Column(length = 100)
     private String name;
 
-    @CreationTimestamp
     @Column(updatable = false)
+    @CreationTimestamp
+    @JsonProperty(access = Access.READ_ONLY)
     private Timestamp createdDate;
 
     @UpdateTimestamp

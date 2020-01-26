@@ -36,6 +36,11 @@ public class ResourceTypeServiceTest extends CRUDServiceTest<ResourceType> {
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now())).build();
     }
 
+    @DisplayName("listAll should return correct paged data")
+    @Test
+    void getResourcesTest() {
+        super.listAllTest();
+    }
 
     @DisplayName("getById should call repository and return stored ResourceType")
     @Test
@@ -43,17 +48,12 @@ public class ResourceTypeServiceTest extends CRUDServiceTest<ResourceType> {
         super.getByIdTest(this.resourceType);
     }
 
-    @DisplayName("getById should call repository and return stored ResourceType")
+    @DisplayName("getById should throw NotFoundException")
     @Test
     void getResourceTypeByIdShouldThrow() throws NotFoundException {
         super.getByIdShouldThrow();
     }
 
-    @DisplayName("listAll should return correct paged data")
-    @Test
-    void getResourcesTest() {
-        super.listAllTest();
-    }
 
     @DisplayName("create should return new stored ResourceType")
     @Test
