@@ -30,8 +30,7 @@ public class BaseEntity {
     // == fields ==
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "bigserial")
-    @JsonProperty(access = Access.READ_ONLY)
+    @Column(columnDefinition = "bigserial", insertable = false)
     @EqualsAndHashCode.Include
     private Long id;
 

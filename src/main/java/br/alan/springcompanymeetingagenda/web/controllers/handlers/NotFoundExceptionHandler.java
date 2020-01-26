@@ -29,7 +29,7 @@ public class NotFoundExceptionHandler {
         StringBuffer url = request.getRequest().getRequestURL();
         Integer id = Integer.parseInt(url.substring(url.lastIndexOf("/") + 1, url.length()));
 
-        data.put("message", String.format("Resource with given the ID %d couldn't be found!", id));
+        data.put("message", String.format("Resource with the given ID %d couldn't be found!", id));
         data.put("timestamp", Timestamp.valueOf(LocalDateTime.now()));
         data.put("path", url);
         return new ResponseEntity<>(data, headers, HttpStatus.NOT_FOUND);

@@ -4,14 +4,21 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import br.alan.springcompanymeetingagenda.domain.Meeting;
 import br.alan.springcompanymeetingagenda.domain.Resource;
 import br.alan.springcompanymeetingagenda.domain.ResourceType;
+import br.alan.springcompanymeetingagenda.domain.Role;
+import br.alan.springcompanymeetingagenda.domain.User;
 import br.alan.springcompanymeetingagenda.repositories.MeetingRepository;
 import br.alan.springcompanymeetingagenda.repositories.ResourceRepository;
 import br.alan.springcompanymeetingagenda.repositories.ResourceTypeRepository;
+import br.alan.springcompanymeetingagenda.repositories.RoleRepository;
+import br.alan.springcompanymeetingagenda.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -25,6 +32,9 @@ public class DataLoader implements CommandLineRunner {
     private final ResourceTypeRepository resourceTypeRepository;
     private final ResourceRepository resourceRepository;
     private final MeetingRepository meetingRepository;
+    private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // == public methods ==
     @Override
@@ -32,6 +42,8 @@ public class DataLoader implements CommandLineRunner {
         this.loadResourceTypes();
         this.loadResources();
         this.loadMeetings();
+        this.loadRoles();
+        this.loadUsers();
     }
 
     private void loadResourceTypes() {
@@ -79,6 +91,29 @@ public class DataLoader implements CommandLineRunner {
                         .end(Timestamp.valueOf(LocalDateTime.of(2020, 1, 1, 15, 0, 0))).build());
             } catch (IndexOutOfBoundsException e) {
             }
+        }
+    }
+
+    private void loadRoles() {
+        if (this.roleRepository.count() == 0) {
+            Role role = Role.builder().name("ADMIN").build();
+
+            this.roleRepository.save(role);
+        }
+    }
+
+    private void loadUsers() {
+        if (this.userRepository.count() == 0) {
+            Role adminRole = this.roleRepository.findByName("ADMIN").get();
+
+            User admin = User.builder().name("Admin").username("admin")
+                    .password(this.passwordEncoder.encode("admin"))
+                    .roles(Stream.of(adminRole).collect(Collectors.toSet())).build();
+
+            User user = User.builder().name("User").username("user")
+                    .password(this.passwordEncoder.encode("password")).build();
+
+            this.userRepository.saveAll(Stream.of(admin, user).collect(Collectors.toList()));
         }
     }
 }

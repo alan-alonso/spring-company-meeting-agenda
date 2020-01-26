@@ -4,6 +4,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.transaction.annotation.Transactional;
 import br.alan.springcompanymeetingagenda.domain.BaseEntity;
 import br.alan.springcompanymeetingagenda.utils.BeanUtilsExtension;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public abstract class CRUDServiceImpl<E extends BaseEntity, R extends PagingAndS
     private final R repository;
 
     // == public methods ==
+    @Transactional
     @Override
     public Page<E> listAll(Pageable pageable) {
         return this.repository.findAll(pageable);

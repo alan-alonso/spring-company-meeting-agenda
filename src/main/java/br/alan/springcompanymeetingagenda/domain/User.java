@@ -36,12 +36,15 @@ public class User extends BaseEntity {
     @JsonProperty(access = Access.WRITE_ONLY)
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    private String email;
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "role_user", schema = "meeting", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    private Boolean enabled = true;
+    @Column(columnDefinition = "bool default true")
+    private boolean enabled = true;
 
     @Column(insertable = false)
     @JsonProperty(access = Access.READ_ONLY)
@@ -54,10 +57,11 @@ public class User extends BaseEntity {
     // == constructors
     @Builder
     public User(Long id, String name, Timestamp createdDate, Timestamp lastModifiedDate,
-            Set<Role> roles, String username, String password) {
+            String username, String password, String email, Set<Role> roles) {
         super(id, name, createdDate, lastModifiedDate);
-        this.roles = roles;
         this.username = username;
         this.password = password;
+        this.email = email;
+        this.roles = roles;
     }
 }
