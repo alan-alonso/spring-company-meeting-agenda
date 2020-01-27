@@ -31,6 +31,7 @@ import lombok.ToString;
 public class User extends BaseEntity {
 
     // == fields ==
+    @Column(length = 20)
     private String username;
 
     @JsonProperty(access = Access.WRITE_ONLY)
@@ -57,8 +58,9 @@ public class User extends BaseEntity {
     // == constructors
     @Builder
     public User(Long id, String name, Timestamp createdDate, Timestamp lastModifiedDate,
-            String username, String password, String email, Set<Role> roles) {
-        super(id, name, createdDate, lastModifiedDate);
+            String createdBy, String modifiedBy, String username, String password, String email,
+            Set<Role> roles) {
+        super(id, name, createdDate, lastModifiedDate, createdBy, modifiedBy);
         this.username = username;
         this.password = password;
         this.email = email;

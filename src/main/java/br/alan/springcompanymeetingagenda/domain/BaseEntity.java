@@ -1,5 +1,8 @@
 package br.alan.springcompanymeetingagenda.domain;
 
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import org.springframework.security.core.context.SecurityContextHolder;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -15,6 +18,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import java.time.LocalDateTime;
 
 /**
  * BaseEntity
@@ -42,7 +46,29 @@ public class BaseEntity {
     @JsonProperty(access = Access.READ_ONLY)
     private Timestamp createdDate;
 
+    @Column(name = "modified_date")
     @UpdateTimestamp
     @JsonProperty(access = Access.READ_ONLY)
     private Timestamp lastModifiedDate;
+
+    @Column(name = "created_by", length = 20)
+    @JsonProperty(access = Access.READ_ONLY)
+    private String createdBy;
+
+    @Column(name = "modified_by", length = 20)
+    @JsonProperty(access = Access.READ_ONLY)
+    private String modifiedBy;
+
+    @PrePersist
+    private void prePersist() {
+        this.createdBy =
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+    }
+
+    @PreUpdate
+    private void preUpdate() {
+        this.lastModifiedDate = Timestamp.valueOf(LocalDateTime.now());
+        this.modifiedBy =
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+    }
 }

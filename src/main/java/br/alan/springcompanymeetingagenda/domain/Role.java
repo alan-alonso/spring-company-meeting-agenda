@@ -24,7 +24,8 @@ public class Role extends BaseEntity {
 
     // == constructors ==
     @Builder
-    public Role(Long id, String name, Timestamp createdDate, Timestamp lastModifiedDate) {
-        super(id, name, createdDate, lastModifiedDate);
+    public Role(Long id, String name, Timestamp createdDate, Timestamp lastModifiedDate,
+            String createdBy, String modifiedBy) {
+        super(id, name, createdDate, lastModifiedDate, createdBy, modifiedBy);
     }
 }

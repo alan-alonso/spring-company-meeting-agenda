@@ -35,6 +35,7 @@ public abstract class CRUDServiceImpl<E extends BaseEntity, R extends PagingAndS
 
     @Override
     public E create(E object) {
+        object.setId(null);
         return this.repository.save(object);
     }
 

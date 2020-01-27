@@ -56,8 +56,10 @@ public class Meeting extends BaseEntity {
     // == constructors ==
     @Builder
     public Meeting(Long id, String name, Timestamp createdDate, Timestamp lastModifiedDate,
-            String description, Timestamp start, Timestamp end, Set<Resource> resources) {
-        super(id, name, createdDate, lastModifiedDate);
+            String createdBy, String modifiedBy, String description,
+            @NotNull @FutureOrPresent Timestamp start, @NotNull @FutureOrPresent Timestamp end,
+            Set<Resource> resources) {
+        super(id, name, createdDate, lastModifiedDate, createdBy, modifiedBy);
         this.description = description;
         this.start = start;
         this.end = end;

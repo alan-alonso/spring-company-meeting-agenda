@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class UserPrincipalDetailsService implements UserDetailsService {
 
     // == fields ==
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
 
     // == public methods ==
     @Override

@@ -35,8 +35,8 @@ public class Resource extends BaseEntity {
     // == constructors ==
     @Builder
     public Resource(Long id, String name, Timestamp createdDate, Timestamp lastModifiedDate,
-            ResourceType resourceType) {
-        super(id, name, createdDate, lastModifiedDate);
+            String createdBy, String modifiedBy, ResourceType resourceType) {
+        super(id, name, createdDate, lastModifiedDate, createdBy, modifiedBy);
         this.resourceType = resourceType;
     }
 }

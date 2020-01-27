@@ -2,6 +2,7 @@ package br.alan.springcompanymeetingagenda.bootstrap;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.stream.Collectors;
@@ -82,13 +83,15 @@ public class DataLoader implements CommandLineRunner {
 
                 this.meetingRepository.save(Meeting.builder().name("Meeting 1")
                         .description("Meeting 1 Description")
-                        .start(Timestamp.valueOf(LocalDateTime.of(2020, 1, 1, 8, 0, 0)))
-                        .end(Timestamp.valueOf(LocalDateTime.of(2020, 1, 1, 9, 0, 0))).build());
+                        .start(Timestamp.valueOf(LocalDateTime.now().plus(1, ChronoUnit.MINUTES)))
+                        .end(Timestamp.valueOf(LocalDateTime.now().plus(1, ChronoUnit.MINUTES)))
+                        .build());
                 this.meetingRepository.save(Meeting.builder().name("Meeting 1")
                         .description("Meeting 1 Description")
                         .resources(new HashSet<>(Arrays.asList(room1, projector1)))
-                        .start(Timestamp.valueOf(LocalDateTime.of(2020, 1, 1, 14, 0, 0)))
-                        .end(Timestamp.valueOf(LocalDateTime.of(2020, 1, 1, 15, 0, 0))).build());
+                        .start(Timestamp.valueOf(LocalDateTime.now().plus(1, ChronoUnit.MINUTES)))
+                        .end(Timestamp.valueOf(LocalDateTime.now().plus(1, ChronoUnit.MINUTES)))
+                        .build());
             } catch (IndexOutOfBoundsException e) {
             }
         }
