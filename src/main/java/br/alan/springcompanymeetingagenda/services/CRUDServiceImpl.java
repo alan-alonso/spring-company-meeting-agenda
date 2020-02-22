@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
  * CRUDServiceImpl
  * 
  * A simple implementation of the {@link CRUDService} interface.
+ * 
+ * @author Alan Alonso
  */
 @RequiredArgsConstructor
 public abstract class CRUDServiceImpl<E extends BaseEntity, R extends PagingAndSortingRepository<E, Long>>
@@ -35,6 +37,7 @@ public abstract class CRUDServiceImpl<E extends BaseEntity, R extends PagingAndS
 
     @Override
     public E create(E object) {
+        // avoid merging object with existing one
         object.setId(null);
         return this.repository.save(object);
     }

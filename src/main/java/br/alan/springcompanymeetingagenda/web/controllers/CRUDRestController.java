@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 /**
  * CRUDRestController
  *
- *
+ * Basic RESTController interface for CRUD operations with an object.
+ * 
+ * @author Alan Alonso
  */
 public interface CRUDRestController<E> {
 

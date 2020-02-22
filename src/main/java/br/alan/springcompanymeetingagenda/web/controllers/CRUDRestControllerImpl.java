@@ -22,6 +22,10 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * CRUDRestControllerImpl
+ * 
+ * Basic RESTController implementation for CRUD operations with an object.
+ * 
+ * @author Alan Alonso
  */
 @SuppressWarnings({"deprecation"})
 @RequiredArgsConstructor

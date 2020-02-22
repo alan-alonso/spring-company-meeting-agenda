@@ -6,6 +6,8 @@ import br.alan.springcompanymeetingagenda.repositories.MeetingRepository;
 
 /**
  * MeetingService
+ * 
+ * @author Alan Alonso
  */
 @Service
 public class MeetingService extends CRUDServiceImpl<Meeting, MeetingRepository> {

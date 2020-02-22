@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * UserPrincipal
+ * 
+ * @author Alan Alonso
  */
 @RequiredArgsConstructor
 public class UserPrincipal implements UserDetails {

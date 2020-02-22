@@ -47,7 +47,7 @@ public class User extends BaseEntity {
     @Column(columnDefinition = "bool default true")
     private boolean enabled = true;
 
-    @Column(insertable = false)
+    @Column(insertable = false, length = 30)
     @JsonProperty(access = Access.READ_ONLY)
     private String forgotPasswordToken;
 

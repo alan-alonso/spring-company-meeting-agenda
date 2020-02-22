@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import br.alan.springcompanymeetingagenda.middlewares.JwtAuthenticationFilter;
 import br.alan.springcompanymeetingagenda.middlewares.JwtAuthorizationFilter;
-import br.alan.springcompanymeetingagenda.services.auth.UserPrincipalDetailsService;
+import br.alan.springcompanymeetingagenda.services.auth.UserDetailsServiceImpl;
 import br.alan.springcompanymeetingagenda.utils.Mappings;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -29,7 +29,7 @@ import lombok.Setter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // == fields ==
-    private final UserPrincipalDetailsService userPrincipalDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Setter
     private long jwtExpirationTime;
@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthencationProvider = new DaoAuthenticationProvider();
         daoAuthencationProvider.setPasswordEncoder(this.passwordEncoder());
-        daoAuthencationProvider.setUserDetailsService(this.userPrincipalDetailsService);
+        daoAuthencationProvider.setUserDetailsService(this.userDetailsService);
 
         return daoAuthencationProvider;
     }

@@ -7,7 +7,9 @@ import org.springframework.data.domain.Pageable;
 /**
  * CRUDService
  * 
- * Generic interface with methods for CRUD operations in a entity.
+ * Generic interface with methods for CRUD operations in an entity.
+ * 
+ * @author Alan Alonso
  */
 public interface CRUDService<E> {
 

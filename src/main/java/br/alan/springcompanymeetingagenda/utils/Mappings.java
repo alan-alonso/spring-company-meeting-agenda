@@ -2,6 +2,10 @@ package br.alan.springcompanymeetingagenda.utils;
 
 /**
  * Mappings
+ * 
+ * Class with constants for all the applications API endpoints.
+ * 
+ * @author Alan Alonso
  */
 public class Mappings {
 

@@ -8,6 +8,8 @@ import org.springframework.beans.BeanWrapperImpl;
 
 /**
  * BeanUtilsExtension
+ * 
+ * @author Alan Alonso
  */
 public class BeanUtilsExtension extends BeanUtils {
 

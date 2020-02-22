@@ -10,11 +10,16 @@ import br.alan.springcompanymeetingagenda.web.controllers.models.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 
 /**
- * UserPrincipalDetailsService
+ * UserDetailsServiceImpl
+ * 
+ * A simple implementation of
+ * {@link org.springframework.security.core.userdetails.UserDetailsService}.
+ * 
+ * @author Alan Alonso
  */
 @RequiredArgsConstructor
 @Service
-public class UserPrincipalDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     // == fields ==
     private UserRepository userRepository;
