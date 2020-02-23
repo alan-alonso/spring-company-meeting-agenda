@@ -32,8 +32,10 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class AuthController {
 
+    // == fields ==
     private final AuthService authService;
 
+    // == public methods ==
     @GetMapping(path = "/me", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<UserDto> getLoggedInUser() throws NotFoundException {
         return new ResponseEntity<>(this.authService.getLoggedInUser(), HttpStatus.OK);
