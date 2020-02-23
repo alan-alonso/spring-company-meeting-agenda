@@ -181,6 +181,7 @@ public class AuthServiceTest {
                 () -> this.authService.resetPassword(this.user.getUsername(), password, "123"));
     }
 
+    @DisplayName("signUp should call repository and return created user data.")
     @Test
     void userSignUpTest() {
         // arrange

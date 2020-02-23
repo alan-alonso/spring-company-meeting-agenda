@@ -10,11 +10,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import br.alan.springcompanymeetingagenda.middlewares.JwtAuthenticationFilter;
 import br.alan.springcompanymeetingagenda.middlewares.JwtAuthorizationFilter;
-import br.alan.springcompanymeetingagenda.services.auth.UserDetailsServiceImpl;
 import br.alan.springcompanymeetingagenda.utils.Mappings;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -29,7 +29,7 @@ import lombok.Setter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // == fields ==
-    private final UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     @Setter
     private long jwtExpirationTime;
