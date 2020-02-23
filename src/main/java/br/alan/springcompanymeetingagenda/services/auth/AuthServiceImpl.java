@@ -87,5 +87,10 @@ public class AuthServiceImpl implements AuthService {
         return true;
     }
 
-    
+    @Override
+    public User signUp(UserDto userDto) {
+        User userToCreate = this.userMapper.userDtoToUser(userDto);
+        User createdUser = this.userRepository.save(userToCreate);
+        return createdUser;
+    }
 }

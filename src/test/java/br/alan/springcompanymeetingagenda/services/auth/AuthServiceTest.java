@@ -58,8 +58,6 @@ public class AuthServiceTest {
         this.user = User.builder().id(1L).name("John Doe").username("johndoe").password("password")
         .build();
         this.userDto = UserDto.builder().id(1L).name("John Doe").username("johndoe").build();
-
-        when(this.userRepository.findByUsername(anyString())).thenReturn(Optional.ofNullable(this.user));
     }
 
     @DisplayName("getLoggedInUser should call repository and return user data")
@@ -72,6 +70,8 @@ public class AuthServiceTest {
         when(authentication.getPrincipal()).thenReturn("");
         SecurityContextHolder.setContext(securityContext);
         
+        when(this.userRepository.findByUsername(anyString())).thenReturn(Optional
+                .ofNullable(this.user));
         when(this.userMapper.userToUserDto(this.user)).thenReturn(this.userDto);
 
         // act
@@ -90,6 +90,8 @@ public class AuthServiceTest {
         when(this.userRepository.save(any())).thenReturn(this.user);
 
         // act
+        when(this.userRepository.findByUsername(anyString()))
+                .thenReturn(Optional.ofNullable(this.user));
         String passwordRecoveryToken = this.authService.getPasswordRecoveryToken("");
     
         // assert
@@ -110,6 +112,7 @@ public class AuthServiceTest {
 
         this.user.setForgotPasswordToken(token);
         this.user.setForgotPasswordTokenExpirationDate(Timestamp.valueOf(LocalDateTime.now().plus(5, ChronoUnit.MINUTES)));
+        when(this.userRepository.findByUsername(anyString())).thenReturn(Optional.ofNullable(this.user));
         when(this.passwordEncoder.encode(password)).thenReturn(password);
 
         // act
@@ -152,6 +155,9 @@ public class AuthServiceTest {
         this.user.setForgotPasswordToken(token);
         this.user.setForgotPasswordTokenExpirationDate(Timestamp.valueOf(LocalDateTime.now().minus(5, ChronoUnit.MINUTES)));
 
+        when(this.userRepository.findByUsername(anyString()))
+                .thenReturn(Optional.ofNullable(this.user));
+
         // act / assert
         assertThrows(AccessDeniedException.class,
                 () -> this.authService.resetPassword(this.user.getUsername(), password, token));
@@ -167,8 +173,26 @@ public class AuthServiceTest {
         this.user.setForgotPasswordToken(token);
         this.user.setForgotPasswordTokenExpirationDate(Timestamp.valueOf(LocalDateTime.now().plus(5, ChronoUnit.MINUTES)));
 
+        when(this.userRepository.findByUsername(anyString()))
+                .thenReturn(Optional.ofNullable(this.user));
+
         // act / assert
         assertThrows(AccessDeniedException.class,
                 () -> this.authService.resetPassword(this.user.getUsername(), password, "123"));
+    }
+
+    @Test
+    void userSignUpTest() {
+        // arrange
+        when(this.userRepository.save(this.user)).thenReturn(this.user);
+        when(this.userMapper.userDtoToUser(this.userDto)).thenReturn(this.user);
+    
+        // act
+        User user = this.authService.signUp(this.userDto);
+    
+        // assert
+        assertEquals(this.user, user);
+        verify(this.userMapper).userDtoToUser(this.userDto);
+        verify(this.userRepository).save(this.user);
     }
 }

@@ -2,6 +2,7 @@ package br.alan.springcompanymeetingagenda.services.auth;
 
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.access.AccessDeniedException;
+import br.alan.springcompanymeetingagenda.domain.User;
 import br.alan.springcompanymeetingagenda.web.controllers.models.UserDto;
 
 public interface AuthService {
@@ -35,5 +36,13 @@ public interface AuthService {
      */
     boolean resetPassword(String username, String newPassword, String forgotPasswordToken)
             throws AccessDeniedException, NotFoundException;
+
+    /**
+     * Create new user.
+     * 
+     * @param userDto
+     * @return created user.
+     */
+    User signUp(UserDto userDto);
 
 }
