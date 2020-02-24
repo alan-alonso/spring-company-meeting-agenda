@@ -15,5 +15,5 @@ public class Mappings {
     public static final String MEETINGS_PATH = ROOT_PATH + "/meetings";
     public static final String AUTH_PATH = ROOT_PATH + "/auth";
     public static final String USERS_PATH = ROOT_PATH + "/users";
-
+    public static final String ADMIN_PATH = ROOT_PATH + "/admins";
 }
