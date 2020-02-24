@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.web.servlet.MockMvc;
 import br.alan.springcompanymeetingagenda.domain.ResourceType;
 import br.alan.springcompanymeetingagenda.services.ResourceTypeService;
@@ -30,6 +31,9 @@ public class ResourceTypeControllerTest extends CRUDRestControllerTest<ResourceT
 
     @MockBean
     ResourceTypeService resourceTypeService;
+    
+    @MockBean
+    UserDetailsService userDetailsService;
 
     @Autowired
     ObjectMapper objectMapper;

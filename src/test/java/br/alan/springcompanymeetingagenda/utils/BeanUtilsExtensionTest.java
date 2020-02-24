@@ -17,7 +17,7 @@ public class BeanUtilsExtensionTest {
     void getNullPropertyNamesTestNonNullObj() {
         // arrange
         ResourceType resourceType = ResourceType.builder().id(null).name("name").createdDate(null)
-                .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now())).build();
+                .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now())).modifiedBy("modifiedBy").createdBy("createdBy").build();
 
         // act
         String[] nullProps = BeanUtilsExtension.getNullPropertyNames(resourceType);

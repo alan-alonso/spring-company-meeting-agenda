@@ -1,4 +1,4 @@
-package br.alan.springcompanymeetingagenda.web;
+package br.alan.springcompanymeetingagenda.web.controllers;
 
 import static org.mockito.Mockito.reset;
 import java.sql.Timestamp;
@@ -16,13 +16,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.web.servlet.MockMvc;
 import br.alan.springcompanymeetingagenda.domain.Resource;
 import br.alan.springcompanymeetingagenda.domain.ResourceType;
 import br.alan.springcompanymeetingagenda.services.ResourceService;
 import br.alan.springcompanymeetingagenda.utils.Mappings;
-import br.alan.springcompanymeetingagenda.web.controllers.CRUDRestControllerTest;
-import br.alan.springcompanymeetingagenda.web.controllers.ResourceController;
 
 /**
  * ResourceControllerTest
@@ -33,6 +32,9 @@ public class ResourceControllerTest extends CRUDRestControllerTest<Resource> {
 
     @MockBean
     ResourceService resourceService;
+
+    @MockBean
+    UserDetailsService userDetailsService;
 
     @Autowired
     ObjectMapper objectMapper;
