@@ -25,6 +25,10 @@ import br.alan.springcompanymeetingagenda.utils.Mappings;
 
 /**
  * ResourceControllerTest
+ * 
+ * Test class for {@link ResourceController}.
+ * 
+ * @author Alan Alonso
  */
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(ResourceController.class)

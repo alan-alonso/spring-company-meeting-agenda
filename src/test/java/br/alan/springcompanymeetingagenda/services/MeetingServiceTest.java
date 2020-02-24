@@ -18,6 +18,10 @@ import br.alan.springcompanymeetingagenda.repositories.MeetingRepository;
 
 /**
  * MeetingServiceTest
+ * 
+ * Test class for {@link MeetingService}.
+ * 
+ * @author Alan Alonso
  */
 @ExtendWith(MockitoExtension.class)
 public class MeetingServiceTest extends CRUDServiceTest<Meeting> {

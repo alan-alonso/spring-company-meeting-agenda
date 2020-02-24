@@ -23,6 +23,10 @@ import br.alan.springcompanymeetingagenda.repositories.UserRepository;
 
 /**
  * AdminServiceTest
+ * 
+ * Test class for {@link AdminService}.
+ * 
+ * @author Alan Alonso
  */
 @ExtendWith(MockitoExtension.class)
 public class AdminServiceTest {

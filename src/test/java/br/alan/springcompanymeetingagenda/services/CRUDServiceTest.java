@@ -19,6 +19,8 @@ import lombok.Setter;
  * CRUDServiceTest
  * 
  * Provides generic test methods for simple {@link CRUDService} implementations.
+ * 
+ * @author Alan Alonso
  */
 @Setter
 @SuppressWarnings({"unchecked"})

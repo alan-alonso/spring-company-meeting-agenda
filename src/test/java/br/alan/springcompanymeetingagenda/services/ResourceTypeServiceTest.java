@@ -15,6 +15,10 @@ import br.alan.springcompanymeetingagenda.repositories.ResourceTypeRepository;
 
 /**
  * ResourceTypeServiceTest
+ * 
+ * Test class for {@link ResourceTypeService}.
+ * 
+ * @author Alan Alonso
  */
 @ExtendWith(MockitoExtension.class)
 public class ResourceTypeServiceTest extends CRUDServiceTest<ResourceType> {

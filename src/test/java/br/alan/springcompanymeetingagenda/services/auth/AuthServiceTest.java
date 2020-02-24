@@ -34,6 +34,10 @@ import br.alan.springcompanymeetingagenda.web.mappers.UserMapper;
 
 /**
  * AuthServiceTest
+ * 
+ * Test class for {@link AuthService}.
+ * 
+ * @author Alan Alonso
  */
 @ExtendWith(MockitoExtension.class)
 public class AuthServiceTest {

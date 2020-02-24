@@ -22,6 +22,10 @@ import br.alan.springcompanymeetingagenda.utils.Mappings;
 
 /**
  * AdminControllerTest
+ * 
+ * Test class for {@link AdminController}.
+ * 
+ * @author Alan Alonso
  */
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(AdminController.class)

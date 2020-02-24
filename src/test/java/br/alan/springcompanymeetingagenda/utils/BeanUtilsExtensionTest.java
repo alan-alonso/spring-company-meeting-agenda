@@ -9,6 +9,10 @@ import br.alan.springcompanymeetingagenda.domain.ResourceType;
 
 /**
  * BeanUtilsExtensionTest
+ * 
+ * Test class for {@link BeanUtilsExtension}.
+ * 
+ * @author Alan Alonso
  */
 public class BeanUtilsExtensionTest {
 

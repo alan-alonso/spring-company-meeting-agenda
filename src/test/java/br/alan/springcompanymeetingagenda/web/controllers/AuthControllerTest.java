@@ -33,6 +33,10 @@ import br.alan.springcompanymeetingagenda.web.controllers.models.UserDto;
 
 /**
  * AuthControllerTest
+ * 
+ * Test class for {@link AuthController}.
+ * 
+ * @author Alan Alonso
  */
 @SuppressWarnings({"deprecation"})
 @AutoConfigureMockMvc(addFilters = false)
