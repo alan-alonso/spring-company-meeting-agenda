@@ -18,8 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 import br.alan.springcompanymeetingagenda.domain.User;
 import br.alan.springcompanymeetingagenda.services.auth.AuthService;
 import br.alan.springcompanymeetingagenda.utils.Mappings;
+import br.alan.springcompanymeetingagenda.web.controllers.models.InputDataValidationErrorResponse;
 import br.alan.springcompanymeetingagenda.web.controllers.models.LoginDto;
 import br.alan.springcompanymeetingagenda.web.controllers.models.UserDto;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 
@@ -29,6 +36,7 @@ import lombok.RequiredArgsConstructor;
 @SuppressWarnings({"deprecation"})
 @RequiredArgsConstructor
 @RequestMapping(Mappings.AUTH_PATH)
+@Api(description = "Auth Endpoints", tags = "Auth")
 @RestController
 public class AuthController {
 
@@ -37,11 +45,17 @@ public class AuthController {
 
     // == public methods ==
     @GetMapping(path = "/me", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation("Get information about the current logged in user")
+    @ApiResponse(code = 403, message = "Not Authorized")
     public ResponseEntity<UserDto> getLoggedInUser() throws NotFoundException {
         return new ResponseEntity<>(this.authService.getLoggedInUser(), HttpStatus.OK);
     }
 
     @PostMapping(path = "/pw_recovery", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("Request password reset token")
+    @ApiImplicitParams({@ApiImplicitParam(name = "username", value = "Username", required = true,
+            allowEmptyValue = false, paramType = "body", dataTypeClass = String.class,
+            example = "username")})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void getPasswordRecoveryToken(@RequestBody Map<String, String> data)
             throws NotFoundException {
@@ -53,9 +67,17 @@ public class AuthController {
     }
 
     @PostMapping(path = "/resetpassword", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("Reset user password")
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Access Token",
+            required = true, allowEmptyValue = false, paramType = "header",
+            dataTypeClass = String.class, example = "Bearer pw_recovery_token")})
+    @ApiResponses({@ApiResponse(code = 403, message = "Invalid token")
+
+    })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void resetPassword(
-            @RequestHeader(value = "Authorization", required = true) String forgotPasswordToken,
+            @RequestHeader(value = HttpHeaders.AUTHORIZATION,
+                    required = true) String forgotPasswordToken,
             @RequestBody LoginDto newCredentials) throws AccessDeniedException, NotFoundException {
         forgotPasswordToken = forgotPasswordToken.trim().replaceAll("Bearer ", "");
         this.authService.resetPassword(newCredentials.getUsername(), newCredentials.getPassword(),
@@ -63,6 +85,11 @@ public class AuthController {
     }
 
     @PostMapping(path = "/signup", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("Create new user")
+    @ApiResponses({@ApiResponse(code = 400, message = "Bad format for user",
+            response = InputDataValidationErrorResponse.class)
+
+    })
     public ResponseEntity<Object> signUp(@RequestBody @Validated UserDto userDto) {
         User createdUser = this.authService.signUp(userDto);
         HttpHeaders headers = new HttpHeaders();

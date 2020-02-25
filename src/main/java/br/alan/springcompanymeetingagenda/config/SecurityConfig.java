@@ -62,10 +62,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // configure access rules
         http.authorizeRequests()
-                .antMatchers(Mappings.RESOURCE_TYPES_PATH + "/**", Mappings.RESOURCES_PATH + "/**", Mappings.ADMIN_PATH + "/**")
+                .antMatchers(Mappings.RESOURCE_TYPES_PATH + "/**", Mappings.RESOURCES_PATH + "/**",
+                        Mappings.ADMIN_PATH + "/**")
                 .hasRole("ADMIN").antMatchers(HttpMethod.GET, Mappings.MEETINGS_PATH + "/**")
-                .permitAll().antMatchers(Mappings.AUTH_PATH + "/login", Mappings.AUTH_PATH + "/pw_recovery", Mappings.AUTH_PATH + "/resetpassword", Mappings.AUTH_PATH + "/signup").permitAll().anyRequest()
-                .authenticated();
+                .permitAll()
+                .antMatchers(Mappings.AUTH_PATH + "/login", Mappings.AUTH_PATH + "/pw_recovery",
+                        Mappings.AUTH_PATH + "/resetpassword", Mappings.AUTH_PATH + "/signup",
+                        "/swagger-ui.html/**", "/webjars/springfox-swagger-ui/**",
+                        "/swagger-resources/**", "/v2/**")
+                .permitAll().anyRequest().authenticated();
     }
 
     // == bean methods ==

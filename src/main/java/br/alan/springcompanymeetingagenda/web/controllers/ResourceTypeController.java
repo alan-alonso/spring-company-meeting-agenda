@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.alan.springcompanymeetingagenda.domain.ResourceType;
 import br.alan.springcompanymeetingagenda.services.ResourceTypeService;
 import br.alan.springcompanymeetingagenda.utils.Mappings;
+import io.swagger.annotations.Api;
 
 
 
@@ -12,6 +13,7 @@ import br.alan.springcompanymeetingagenda.utils.Mappings;
  * ResourceTypeController
  */
 @RequestMapping(path = Mappings.RESOURCE_TYPES_PATH)
+@Api(description = "Resource Type Endpoints", tags = "Resource Type")
 @RestController
 public class ResourceTypeController
         extends CRUDRestControllerImpl<ResourceType, ResourceTypeService> {

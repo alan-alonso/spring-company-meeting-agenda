@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import br.alan.springcompanymeetingagenda.domain.BaseEntity;
 import br.alan.springcompanymeetingagenda.services.CRUDService;
+import br.alan.springcompanymeetingagenda.web.controllers.models.InputDataValidationErrorResponse;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -40,6 +44,9 @@ public abstract class CRUDRestControllerImpl<E extends BaseEntity, S extends CRU
 
     // == public methods ==
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "Get all", notes = "Get all existing resources")
+    @ApiResponses({@ApiResponse(code = 403, message = "Not Authorized"),
+            @ApiResponse(code = 404, message = "Not Found")})
     @Override
     public ResponseEntity<Page<E>> listAll(
             @RequestParam(value = "page", required = false,
@@ -54,12 +61,20 @@ public abstract class CRUDRestControllerImpl<E extends BaseEntity, S extends CRU
     }
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "Get by ID", notes = "Get existing resource")
+    @ApiResponses({@ApiResponse(code = 403, message = "Not Authorized"),
+            @ApiResponse(code = 404, message = "Not Found")})
     @Override
     public ResponseEntity<E> getById(@PathVariable Long id) throws NotFoundException {
         return new ResponseEntity<>(this.service.getById(id), HttpStatus.OK);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Create new", notes = "Create new resource")
+    @ApiResponses({
+            @ApiResponse(code = 400, message = "Bad format for resource",
+                    response = InputDataValidationErrorResponse.class),
+            @ApiResponse(code = 403, message = "Not Authorized")})
     @Override
     public ResponseEntity<Object> create(@RequestBody @Validated E object) {
         E storedObject = this.service.create(object);
@@ -71,6 +86,12 @@ public abstract class CRUDRestControllerImpl<E extends BaseEntity, S extends CRU
     }
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Update", notes = "Update existing resource")
+    @ApiResponses({
+            @ApiResponse(code = 400, message = "Bad format for resource",
+                    response = InputDataValidationErrorResponse.class),
+            @ApiResponse(code = 403, message = "Not Authorized"),
+            @ApiResponse(code = 404, message = "Not Found")})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Override
     public void update(@PathVariable Long id, @RequestBody @Validated E object)
@@ -79,6 +100,9 @@ public abstract class CRUDRestControllerImpl<E extends BaseEntity, S extends CRU
     }
 
     @DeleteMapping(path = "/{id}")
+    @ApiOperation(value = "Delete", notes = "Delete existing resource")
+    @ApiResponses({@ApiResponse(code = 403, message = "Not Authorized"),
+            @ApiResponse(code = 404, message = "Not Found")})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Override
     public void delete(@PathVariable Long id) throws NotFoundException {

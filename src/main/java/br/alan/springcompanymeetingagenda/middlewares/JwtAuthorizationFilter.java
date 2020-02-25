@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -38,7 +39,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
             FilterChain chain) throws IOException, ServletException {
         // Read the Authorization header, where the JWT token should be
-        String header = request.getHeader("Authorization");
+        String header = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         // If header does not contain "Bearer" or is null delegate to Spring impl and
         // exit
@@ -57,7 +58,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     // == private methods ==
     private Authentication getUsernamePasswordAuthentication(HttpServletRequest request) {
-        String token = request.getHeader("Authorization").replace("Bearer ", "");
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION).replace("Bearer ", "");
 
         if (token != null) {
             // parse the token and validate it
