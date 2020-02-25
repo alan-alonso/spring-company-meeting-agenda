@@ -1,4 +1,4 @@
-package br.alan.springcompanymeetingagenda.web.controllers.models;
+package br.alan.springcompanymeetingagenda.web.models;
 
 import java.util.Collection;
 import java.util.List;

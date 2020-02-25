@@ -21,7 +21,7 @@ public abstract class CRUDServiceImpl<E extends BaseEntity, R extends PagingAndS
         implements CRUDService<E> {
 
     // == fields ==
-    private final R repository;
+    protected final R repository;
 
     // == public methods ==
     @Transactional
@@ -30,6 +30,7 @@ public abstract class CRUDServiceImpl<E extends BaseEntity, R extends PagingAndS
         return this.repository.findAll(pageable);
     }
 
+    @Transactional
     @Override
     public E getById(Long id) throws NotFoundException {
         return this.repository.findById(id).orElseThrow(NotFoundException::new);

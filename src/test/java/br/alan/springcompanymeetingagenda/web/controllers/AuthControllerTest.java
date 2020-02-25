@@ -28,8 +28,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import br.alan.springcompanymeetingagenda.domain.User;
 import br.alan.springcompanymeetingagenda.services.auth.AuthService;
 import br.alan.springcompanymeetingagenda.utils.Mappings;
-import br.alan.springcompanymeetingagenda.web.controllers.models.LoginDto;
-import br.alan.springcompanymeetingagenda.web.controllers.models.UserDto;
+import br.alan.springcompanymeetingagenda.web.models.LoginDto;
+import br.alan.springcompanymeetingagenda.web.models.UserDto;
 
 /**
  * AuthControllerTest
@@ -121,16 +121,15 @@ public class AuthControllerTest {
     @Test
     void signUpTest() throws JsonProcessingException, Exception {
         // arrange
-        User user = User.builder().id(1L).name("John Doe").username("johndoe")
-                .password("password").build();
+        User user = User.builder().id(1L).name("John Doe").username("johndoe").password("password")
+                .build();
 
         when(this.authService.signUp(any(UserDto.class))).thenReturn(user);
-        
+
         String serializedWithoutPw = this.objectMapper.writeValueAsString(this.userDto);
-        String serializedWithPw =
-                serializedWithoutPw.substring(0, serializedWithoutPw.length() - 1) +
-                        ",\"password\": \"" + this.userDto.getPassword() + "\"}";
-                
+        String serializedWithPw = serializedWithoutPw.substring(0, serializedWithoutPw.length() - 1)
+                + ",\"password\": \"" + this.userDto.getPassword() + "\"}";
+
         // act / assert
         this.mockMvc
                 .perform(post(Mappings.AUTH_PATH + "/signup")

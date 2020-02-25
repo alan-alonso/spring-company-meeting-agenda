@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -13,6 +12,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -47,7 +48,8 @@ public class Meeting extends BaseEntity {
     @Column(name = "end_date", nullable = false)
     private Timestamp end;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
+    @Fetch(FetchMode.JOIN)
     @JoinTable(name = "meeting_resource", schema = "meeting",
             joinColumns = @JoinColumn(name = "meeting_id"),
             inverseJoinColumns = @JoinColumn(name = "resource_id"))

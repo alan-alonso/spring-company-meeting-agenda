@@ -1,4 +1,4 @@
-package br.alan.springcompanymeetingagenda.web.controllers.handlers;
+package br.alan.springcompanymeetingagenda.web.handlers;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.ServletWebRequest;
-import br.alan.springcompanymeetingagenda.web.controllers.models.InputDataValidationErrorResponse;
+import br.alan.springcompanymeetingagenda.web.models.InputDataValidationErrorResponse;
 
 /**
  * ConstraintViolationExceptionHandler

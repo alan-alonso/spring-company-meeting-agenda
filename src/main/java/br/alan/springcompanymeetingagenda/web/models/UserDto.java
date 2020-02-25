@@ -1,4 +1,4 @@
-package br.alan.springcompanymeetingagenda.web.controllers.models;
+package br.alan.springcompanymeetingagenda.web.models;
 
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -26,7 +26,7 @@ public class UserDto {
     @JsonProperty(access = Access.READ_ONLY)
     private Long id;
 
-    
+
     @Size(max = 100)
     @NotBlank
     private String name;
@@ -45,9 +45,9 @@ public class UserDto {
     @JsonProperty(access = Access.READ_ONLY)
     private String modifiedBy;
 
-    @Size(max= 20)
+    @Size(max = 20)
     @NotBlank
     private String username;
-    
+
     Collection<? extends GrantedAuthority> authorities;
 }

@@ -2,7 +2,7 @@ package br.alan.springcompanymeetingagenda.web.mappers;
 
 import org.mapstruct.Mapper;
 import br.alan.springcompanymeetingagenda.domain.User;
-import br.alan.springcompanymeetingagenda.web.controllers.models.UserDto;
+import br.alan.springcompanymeetingagenda.web.models.UserDto;
 
 /**
  * UserMapper
@@ -13,6 +13,6 @@ import br.alan.springcompanymeetingagenda.web.controllers.models.UserDto;
 public interface UserMapper {
 
     User userDtoToUser(UserDto userDto);
-    
+
     UserDto userToUserDto(User user);
 }

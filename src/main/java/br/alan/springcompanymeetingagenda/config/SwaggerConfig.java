@@ -70,6 +70,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                 .contact(new Contact("Alan Alonso", null, "myemail@email.com")).build();
     }
 
+    @SuppressWarnings("unchecked")
     private SecurityContext securityContext() {
         return SecurityContext.builder().securityReferences(this.defaultAuth())
                 .forPaths(Predicates.or(PathSelectors.ant(Mappings.RESOURCE_TYPES_PATH + "/**"),

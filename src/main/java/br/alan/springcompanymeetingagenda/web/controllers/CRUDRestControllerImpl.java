@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import br.alan.springcompanymeetingagenda.domain.BaseEntity;
 import br.alan.springcompanymeetingagenda.services.CRUDService;
-import br.alan.springcompanymeetingagenda.web.controllers.models.InputDataValidationErrorResponse;
+import br.alan.springcompanymeetingagenda.web.models.InputDataValidationErrorResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

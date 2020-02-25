@@ -12,8 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import br.alan.springcompanymeetingagenda.domain.User;
 import br.alan.springcompanymeetingagenda.repositories.UserRepository;
-import br.alan.springcompanymeetingagenda.web.controllers.models.UserDto;
 import br.alan.springcompanymeetingagenda.web.mappers.UserMapper;
+import br.alan.springcompanymeetingagenda.web.models.UserDto;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 
@@ -77,7 +77,7 @@ public class AuthServiceImpl implements AuthService {
                         .valueOf(LocalDateTime.now()).getTime()) {
             throw new AccessDeniedException("Invalid token!");
         }
-        
+
         user.setPassword(this.passwordEncoder.encode(newPassword));
         user.setForgotPasswordToken(null);
         user.setForgotPasswordTokenExpirationDate(null);

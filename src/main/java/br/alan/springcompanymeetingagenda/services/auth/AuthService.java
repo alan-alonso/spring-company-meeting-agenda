@@ -3,7 +3,7 @@ package br.alan.springcompanymeetingagenda.services.auth;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.access.AccessDeniedException;
 import br.alan.springcompanymeetingagenda.domain.User;
-import br.alan.springcompanymeetingagenda.web.controllers.models.UserDto;
+import br.alan.springcompanymeetingagenda.web.models.UserDto;
 
 public interface AuthService {
 

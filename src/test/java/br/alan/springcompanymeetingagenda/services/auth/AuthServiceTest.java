@@ -29,8 +29,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import br.alan.springcompanymeetingagenda.domain.User;
 import br.alan.springcompanymeetingagenda.repositories.UserRepository;
-import br.alan.springcompanymeetingagenda.web.controllers.models.UserDto;
 import br.alan.springcompanymeetingagenda.web.mappers.UserMapper;
+import br.alan.springcompanymeetingagenda.web.models.UserDto;
 
 /**
  * AuthServiceTest
@@ -60,7 +60,7 @@ public class AuthServiceTest {
     @BeforeEach
     void setUp() {
         this.user = User.builder().id(1L).name("John Doe").username("johndoe").password("password")
-        .build();
+                .build();
         this.userDto = UserDto.builder().id(1L).name("John Doe").username("johndoe").build();
     }
 
@@ -73,9 +73,9 @@ public class AuthServiceTest {
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getPrincipal()).thenReturn("");
         SecurityContextHolder.setContext(securityContext);
-        
-        when(this.userRepository.findByUsername(anyString())).thenReturn(Optional
-                .ofNullable(this.user));
+
+        when(this.userRepository.findByUsername(anyString()))
+                .thenReturn(Optional.ofNullable(this.user));
         when(this.userMapper.userToUserDto(this.user)).thenReturn(this.userDto);
 
         // act
@@ -86,7 +86,7 @@ public class AuthServiceTest {
         verify(this.userRepository).findByUsername(anyString());
         verify(this.userMapper).userToUserDto(this.user);
     }
-    
+
     @DisplayName("getPasswordToken should set and save expiration date for password recovery, generate and return token.")
     @Test
     void getPasswordTokenTest() throws NotFoundException {
@@ -97,11 +97,13 @@ public class AuthServiceTest {
         when(this.userRepository.findByUsername(anyString()))
                 .thenReturn(Optional.ofNullable(this.user));
         String passwordRecoveryToken = this.authService.getPasswordRecoveryToken("");
-    
+
         // assert
         assertNotNull(this.user.getForgotPasswordToken());
-        assertTrue(this.user.getForgotPasswordTokenExpirationDate().getTime() > Timestamp
-                .valueOf(LocalDateTime.now()).getTime(), () -> "Expiration date should be greater than current time!");
+        assertTrue(
+                this.user.getForgotPasswordTokenExpirationDate().getTime() > Timestamp
+                        .valueOf(LocalDateTime.now()).getTime(),
+                () -> "Expiration date should be greater than current time!");
         assertNotNull(passwordRecoveryToken);
         verify(this.userRepository).findByUsername(anyString());
         verify(this.userRepository).save(any());
@@ -115,16 +117,19 @@ public class AuthServiceTest {
         String token = password;
 
         this.user.setForgotPasswordToken(token);
-        this.user.setForgotPasswordTokenExpirationDate(Timestamp.valueOf(LocalDateTime.now().plus(5, ChronoUnit.MINUTES)));
-        when(this.userRepository.findByUsername(anyString())).thenReturn(Optional.ofNullable(this.user));
+        this.user.setForgotPasswordTokenExpirationDate(
+                Timestamp.valueOf(LocalDateTime.now().plus(5, ChronoUnit.MINUTES)));
+        when(this.userRepository.findByUsername(anyString()))
+                .thenReturn(Optional.ofNullable(this.user));
         when(this.passwordEncoder.encode(password)).thenReturn(password);
 
         // act
         boolean result = this.authService.resetPassword(this.user.getUsername(), password, token);
-    
+
         // assert
         assertNull(this.user.getForgotPasswordToken(), "Token should have been reset!");
-        assertNull(this.user.getForgotPasswordTokenExpirationDate(), "Expiration date should have been reset!");
+        assertNull(this.user.getForgotPasswordTokenExpirationDate(),
+                "Expiration date should have been reset!");
         assertEquals(password, this.user.getPassword(), "Password should have been changed!");
         assertTrue(result);
         verify(this.userRepository).findByUsername(anyString());
@@ -133,7 +138,8 @@ public class AuthServiceTest {
 
     @DisplayName("resetPassword should throw NotFoundException, as user couldn't be found.")
     @Test
-    void resetPasswordShouldThrowNotFoundException() throws AccessDeniedException, NotFoundException {
+    void resetPasswordShouldThrowNotFoundException()
+            throws AccessDeniedException, NotFoundException {
         // arrange
         String password = "12345";
         String token = password;
@@ -141,7 +147,7 @@ public class AuthServiceTest {
         this.user.setForgotPasswordToken(token);
         this.user.setForgotPasswordTokenExpirationDate(
                 Timestamp.valueOf(LocalDateTime.now().minus(5, ChronoUnit.MINUTES)));
-        
+
         when(this.userRepository.findByUsername(anyString())).thenReturn(Optional.ofNullable(null));
 
         // act / assert
@@ -151,13 +157,15 @@ public class AuthServiceTest {
 
     @DisplayName("resetPassword should throw AccessDenied, as token is expired.")
     @Test
-    void resetPasswordShouldThrowAccessDeniedTokenExpired() throws AccessDeniedException, NotFoundException {
+    void resetPasswordShouldThrowAccessDeniedTokenExpired()
+            throws AccessDeniedException, NotFoundException {
         // arrange
         String password = "12345";
         String token = password;
 
         this.user.setForgotPasswordToken(token);
-        this.user.setForgotPasswordTokenExpirationDate(Timestamp.valueOf(LocalDateTime.now().minus(5, ChronoUnit.MINUTES)));
+        this.user.setForgotPasswordTokenExpirationDate(
+                Timestamp.valueOf(LocalDateTime.now().minus(5, ChronoUnit.MINUTES)));
 
         when(this.userRepository.findByUsername(anyString()))
                 .thenReturn(Optional.ofNullable(this.user));
@@ -166,16 +174,18 @@ public class AuthServiceTest {
         assertThrows(AccessDeniedException.class,
                 () -> this.authService.resetPassword(this.user.getUsername(), password, token));
     }
-    
+
     @DisplayName("resetPassword should throw AccessDenied, as tokens don't match.")
     @Test
-    void resetPasswordShouldThrowAccessDeniedTokensDontMatch() throws AccessDeniedException, NotFoundException {
+    void resetPasswordShouldThrowAccessDeniedTokensDontMatch()
+            throws AccessDeniedException, NotFoundException {
         // arrange
         String password = "12345";
         String token = password;
 
         this.user.setForgotPasswordToken(token);
-        this.user.setForgotPasswordTokenExpirationDate(Timestamp.valueOf(LocalDateTime.now().plus(5, ChronoUnit.MINUTES)));
+        this.user.setForgotPasswordTokenExpirationDate(
+                Timestamp.valueOf(LocalDateTime.now().plus(5, ChronoUnit.MINUTES)));
 
         when(this.userRepository.findByUsername(anyString()))
                 .thenReturn(Optional.ofNullable(this.user));
@@ -191,10 +201,10 @@ public class AuthServiceTest {
         // arrange
         when(this.userRepository.save(this.user)).thenReturn(this.user);
         when(this.userMapper.userDtoToUser(this.userDto)).thenReturn(this.user);
-    
+
         // act
         User user = this.authService.signUp(this.userDto);
-    
+
         // assert
         assertEquals(this.user, user);
         verify(this.userMapper).userDtoToUser(this.userDto);

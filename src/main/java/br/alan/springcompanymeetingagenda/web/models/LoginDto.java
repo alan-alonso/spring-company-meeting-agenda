@@ -1,4 +1,4 @@
-package br.alan.springcompanymeetingagenda.web.controllers.models;
+package br.alan.springcompanymeetingagenda.web.models;
 
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
