@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.alan.springcompanymeetingagenda.domain.User;
 import br.alan.springcompanymeetingagenda.services.auth.AuthService;
 import br.alan.springcompanymeetingagenda.utils.Mappings;
+import br.alan.springcompanymeetingagenda.web.models.BaseErrorResponse;
 import br.alan.springcompanymeetingagenda.web.models.InputDataValidationErrorResponse;
 import br.alan.springcompanymeetingagenda.web.models.LoginDto;
 import br.alan.springcompanymeetingagenda.web.models.UserDto;
@@ -46,7 +47,7 @@ public class AuthController {
     // == public methods ==
     @GetMapping(path = "/me", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation("Get information about the current logged in user")
-    @ApiResponse(code = 403, message = "Not Authorized")
+    @ApiResponse(code = 403, message = "Forbidden", response = BaseErrorResponse.class)
     public ResponseEntity<UserDto> getLoggedInUser() throws NotFoundException {
         return new ResponseEntity<>(this.authService.getLoggedInUser(), HttpStatus.OK);
     }
@@ -71,7 +72,8 @@ public class AuthController {
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Access Token",
             required = true, allowEmptyValue = false, paramType = "header",
             dataTypeClass = String.class, example = "Bearer pw_recovery_token")})
-    @ApiResponses({@ApiResponse(code = 403, message = "Invalid token")
+    @ApiResponses({
+            @ApiResponse(code = 403, message = "Invalid token", response = BaseErrorResponse.class)
 
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)

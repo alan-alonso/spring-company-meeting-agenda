@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import br.alan.springcompanymeetingagenda.services.AdminServiceImpl;
 import br.alan.springcompanymeetingagenda.utils.Mappings;
+import br.alan.springcompanymeetingagenda.web.models.BaseErrorResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -35,7 +36,8 @@ public class AdminController {
     @ApiOperation("Grant admin permissions to user")
     @Authorization("ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @ApiResponses({@ApiResponse(code = 204, message = "Test")})
+    @ApiResponses({@ApiResponse(code = 204, message = "Test"),
+            @ApiResponse(code = 403, message = "Forbidden", response = BaseErrorResponse.class)})
     public void promoteToAdmin(@PathVariable Long userId) throws NotFoundException {
         this.adminService.promoteToAdmin(userId);
     }
@@ -43,6 +45,8 @@ public class AdminController {
     @DeleteMapping(path = "/{userId}")
     @ApiOperation("Revoke admin permission from user")
     @Authorization("ADMIN")
+    @ApiResponses({@ApiResponse(code = 204, message = "Test"),
+            @ApiResponse(code = 403, message = "Forbidden", response = BaseErrorResponse.class)})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void revokeAdmin(@PathVariable Long userId) throws NotFoundException {
         this.adminService.revokeAdmin(userId);

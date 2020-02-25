@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import br.alan.springcompanymeetingagenda.domain.BaseEntity;
 import br.alan.springcompanymeetingagenda.services.CRUDService;
+import br.alan.springcompanymeetingagenda.web.models.BaseErrorResponse;
 import br.alan.springcompanymeetingagenda.web.models.InputDataValidationErrorResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -45,7 +46,8 @@ public abstract class CRUDRestControllerImpl<E extends BaseEntity, S extends CRU
     // == public methods ==
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "Get all", notes = "Get all existing resources")
-    @ApiResponses({@ApiResponse(code = 403, message = "Not Authorized"),
+    @ApiResponses({
+            @ApiResponse(code = 403, message = "Forbidden", response = BaseErrorResponse.class),
             @ApiResponse(code = 404, message = "Not Found")})
     @Override
     public ResponseEntity<Page<E>> listAll(
@@ -62,7 +64,8 @@ public abstract class CRUDRestControllerImpl<E extends BaseEntity, S extends CRU
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "Get by ID", notes = "Get existing resource")
-    @ApiResponses({@ApiResponse(code = 403, message = "Not Authorized"),
+    @ApiResponses({
+            @ApiResponse(code = 403, message = "Forbidden", response = BaseErrorResponse.class),
             @ApiResponse(code = 404, message = "Not Found")})
     @Override
     public ResponseEntity<E> getById(@PathVariable Long id) throws NotFoundException {
@@ -74,7 +77,7 @@ public abstract class CRUDRestControllerImpl<E extends BaseEntity, S extends CRU
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad format for resource",
                     response = InputDataValidationErrorResponse.class),
-            @ApiResponse(code = 403, message = "Not Authorized")})
+            @ApiResponse(code = 403, message = "Forbidden", response = BaseErrorResponse.class)})
     @Override
     public ResponseEntity<Object> create(@RequestBody @Validated E object) {
         E storedObject = this.service.create(object);
@@ -90,7 +93,7 @@ public abstract class CRUDRestControllerImpl<E extends BaseEntity, S extends CRU
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad format for resource",
                     response = InputDataValidationErrorResponse.class),
-            @ApiResponse(code = 403, message = "Not Authorized"),
+            @ApiResponse(code = 403, message = "Forbidden", response = BaseErrorResponse.class),
             @ApiResponse(code = 404, message = "Not Found")})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Override
@@ -101,7 +104,8 @@ public abstract class CRUDRestControllerImpl<E extends BaseEntity, S extends CRU
 
     @DeleteMapping(path = "/{id}")
     @ApiOperation(value = "Delete", notes = "Delete existing resource")
-    @ApiResponses({@ApiResponse(code = 403, message = "Not Authorized"),
+    @ApiResponses({
+            @ApiResponse(code = 403, message = "Forbidden", response = BaseErrorResponse.class),
             @ApiResponse(code = 404, message = "Not Found")})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Override
