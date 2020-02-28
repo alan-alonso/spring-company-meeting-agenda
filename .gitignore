@@ -36,3 +36,16 @@ build/
 ### VS Code ###
 .vscode/
 src/main/resources/application.properties
+
+# dependencies
+node_modules
+
+# build
+.nuxt
+dist
+
+# yarn
+yarn-error.log
+
+# temp files
+test/e2e/screenshots
