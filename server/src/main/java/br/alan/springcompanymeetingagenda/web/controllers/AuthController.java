@@ -26,6 +26,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -97,5 +98,13 @@ public class AuthController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", Mappings.USERS_PATH + '/' + createdUser.getId());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
+
+    @ApiOperation("Login.")
+    @ApiResponses({@ApiResponse(code = 400, message = "Bad credentials")})
+    @PostMapping(path = "/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void fakeLogin(@ApiParam(name = "User", value = "User") @RequestBody LoginDto loginDto) {
+        throw new IllegalStateException(
+                "This method shouldn't be called. It's implemented by Spring Security filters.");
     }
 }

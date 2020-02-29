@@ -26,6 +26,7 @@
     </developers>
 
     <properties>
+        <java.version>11</java.version>
         <main.basedir>${project.basedir}</main.basedir>
     </properties>
 

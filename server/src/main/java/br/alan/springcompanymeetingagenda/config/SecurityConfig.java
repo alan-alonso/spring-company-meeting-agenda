@@ -69,7 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(Mappings.AUTH_PATH + "/login", Mappings.AUTH_PATH + "/pw_recovery",
                         Mappings.AUTH_PATH + "/resetpassword", Mappings.AUTH_PATH + "/signup",
                         "/swagger-ui.html/**", "/webjars/springfox-swagger-ui/**",
-                        "/swagger-resources/**", "/v2/**")
+                        "/swagger-resources/**", "/v2/**", "/assets/**", "/index.html",
+                        "/favicon.ico")
                 .permitAll().anyRequest().authenticated();
     }
 
