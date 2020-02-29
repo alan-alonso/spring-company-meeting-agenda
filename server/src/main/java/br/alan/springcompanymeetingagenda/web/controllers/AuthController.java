@@ -21,6 +21,7 @@ import br.alan.springcompanymeetingagenda.utils.Mappings;
 import br.alan.springcompanymeetingagenda.web.models.BaseErrorResponse;
 import br.alan.springcompanymeetingagenda.web.models.InputDataValidationErrorResponse;
 import br.alan.springcompanymeetingagenda.web.models.LoginDto;
+import br.alan.springcompanymeetingagenda.web.models.SuccessfulLoginResponse;
 import br.alan.springcompanymeetingagenda.web.models.UserDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -29,6 +30,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ResponseHeader;
 import lombok.RequiredArgsConstructor;
 
 
@@ -100,8 +102,13 @@ public class AuthController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
-    @ApiOperation("Login.")
-    @ApiResponses({@ApiResponse(code = 400, message = "Bad credentials")})
+    @ApiOperation("Login")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Login Successful",
+                    responseHeaders = {@ResponseHeader(name = "Authorization",
+                            description = "Bearer access_token", response = String.class)},
+                    response = SuccessfulLoginResponse.class),
+            @ApiResponse(code = 400, message = "Bad credentials")})
     @PostMapping(path = "/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public void fakeLogin(@ApiParam(name = "User", value = "User") @RequestBody LoginDto loginDto) {
         throw new IllegalStateException(
