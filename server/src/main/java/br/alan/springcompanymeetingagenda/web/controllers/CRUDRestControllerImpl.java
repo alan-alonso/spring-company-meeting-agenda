@@ -45,7 +45,7 @@ public abstract class CRUDRestControllerImpl<E extends BaseEntity, S extends CRU
 
     // == public methods ==
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiOperation(value = "Get all", notes = "Get all existing resources")
+    @ApiOperation(value = "Get all", notes = "Get all existing resources", nickname = "listAll")
     @ApiResponses({
             @ApiResponse(code = 403, message = "Forbidden", response = BaseErrorResponse.class),
             @ApiResponse(code = 404, message = "Not Found")})
@@ -63,7 +63,7 @@ public abstract class CRUDRestControllerImpl<E extends BaseEntity, S extends CRU
     }
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiOperation(value = "Get by ID", notes = "Get existing resource")
+    @ApiOperation(value = "Get by ID", notes = "Get existing resource", nickname = "getById")
     @ApiResponses({
             @ApiResponse(code = 403, message = "Forbidden", response = BaseErrorResponse.class),
             @ApiResponse(code = 404, message = "Not Found")})
@@ -73,7 +73,7 @@ public abstract class CRUDRestControllerImpl<E extends BaseEntity, S extends CRU
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Create new", notes = "Create new resource")
+    @ApiOperation(value = "Create new", notes = "Create new resource", nickname = "create")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad format for resource",
                     response = InputDataValidationErrorResponse.class),
@@ -89,7 +89,7 @@ public abstract class CRUDRestControllerImpl<E extends BaseEntity, S extends CRU
     }
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Update", notes = "Update existing resource")
+    @ApiOperation(value = "Update", notes = "Update existing resource", nickname = "update")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad format for resource",
                     response = InputDataValidationErrorResponse.class),
@@ -103,7 +103,7 @@ public abstract class CRUDRestControllerImpl<E extends BaseEntity, S extends CRU
     }
 
     @DeleteMapping(path = "/{id}")
-    @ApiOperation(value = "Delete", notes = "Delete existing resource")
+    @ApiOperation(value = "Delete", notes = "Delete existing resource", nickname = "delete")
     @ApiResponses({
             @ApiResponse(code = 403, message = "Forbidden", response = BaseErrorResponse.class),
             @ApiResponse(code = 404, message = "Not Found")})

@@ -1,5 +1,6 @@
 package br.alan.springcompanymeetingagenda.config;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 import com.google.common.base.Predicates;
@@ -59,7 +60,8 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                         Arrays.asList(new ResponseMessageBuilder()
                                 .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
                                 .message(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
-                                .build()));
+                                .build()))
+                .directModelSubstitute(Timestamp.class, Long.class);
     }
 
     private ApiInfo metaData() {

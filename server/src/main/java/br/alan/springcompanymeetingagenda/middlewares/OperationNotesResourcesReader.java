@@ -20,10 +20,10 @@ import springfox.documentation.swagger.common.SwaggerPluginSupport;
  * Provides extra notes for request methods annotated with
  * {@link io.swagger.annotations.Authorization}.
  */
-@Component
 @RequiredArgsConstructor
 @Order(SwaggerPluginSupport.SWAGGER_PLUGIN_ORDER + 1)
 @Slf4j
+@Component
 public class OperationNotesResourcesReader implements OperationBuilderPlugin {
 
     private final DescriptionResolver descriptions;

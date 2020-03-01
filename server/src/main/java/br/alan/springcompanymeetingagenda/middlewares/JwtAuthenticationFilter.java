@@ -91,7 +91,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                     .expiresIn(new Timestamp(this.getJwtExpirationTime())).build();
             ObjectMapper objectMapper = new ObjectMapper();
             writer.write(objectMapper.writeValueAsString(successfulLoginResponse));
-
         } catch (Exception e) {
         }
     }

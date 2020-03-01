@@ -102,7 +102,7 @@ public class AuthController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
-    @ApiOperation("Login")
+    @ApiOperation(value = "Login", nickname = "login")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Login Successful",
                     responseHeaders = {@ResponseHeader(name = "Authorization",
